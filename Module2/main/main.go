@@ -9,8 +9,7 @@ import (
 
 func main() {
 	if true {
-		collections.Arrays()
-		collections.Slices()
+		collections.ChangeMaps()
 	} else {
 		pointers.PrintPointers()
 		structs.Method()
@@ -18,5 +17,9 @@ func main() {
 		m.X = 4
 		// m.y = 1 - недоступно т.к с маленькой буквы -> private
 		fmt.Println(m)
+		collections.Arrays()
+		collections.Slices()
+		collections.StructSlices()
+		collections.ShowMaps()
 	}
 }

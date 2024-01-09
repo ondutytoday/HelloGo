@@ -28,6 +28,8 @@ func Slices() {
 	a = make([]int, 3, 5) //тип, длина, вместимость(необязательный параметр)
 	fmt.Println(a)
 	//при использовании функции append - мы переприсваиваем значение переменной
+	//Если нижележащий массив среза s слишком мал, чтобы вместить все значения,
+	//то будет создан новый массив большего размера. Результирующий срез будет ссылаться на этот новый массив.
 	a = append(a, 1)
 	fmt.Println(a)
 	a = append(a, 3)
@@ -35,13 +37,46 @@ func Slices() {
 	a = append(a, 6) //вышли за пределы обозначенной вместимости
 	fmt.Println(a)
 
+	aa := [2]int{1, 2}
+	aaa := aa[:]
+	fmt.Println("Test aa, aaa", aa, aaa)
+	fmt.Println("Test &aa, &aaa", &aa, &aaa)
+	aaa[0] = 15
+	fmt.Println("Test Change: Test aa, aaa", aa, aaa)
+	fmt.Println("Test Change: Test &aa, &aaa", &aa, &aaa)
+	bb := &aa
+	bbb := &aaa
+	fmt.Println("Test bb, bbb", &bb, *bb, &bbb, *bbb)
+	//НЕ САМАЯ ОЧЕВИДНАЯ И ПОНЯТНАЯ ХРЕНЬ:
+	//тут мы превысили вместимость нашего прежнего массива а значит создали новый массив, а значит
+	// старый у нас останется дальше неизмененным, а новый уже будем менять
+	aaa = append(aaa, 17)
+	fmt.Println("After: Test aa, aaa", aa, aaa)
+	fmt.Println("After: Test &aa, &aaa", &aa, &aaa)
+	fmt.Println("After: Test bb, bbb", &bb, *bb, &bbb, *bbb)
+	aaa[0] = 11
+	fmt.Println("After1: Test aa, aaa", aa, aaa)
+	fmt.Println("After1: Test &aa, &aaa", &aa, &aaa)
+	fmt.Println("After1: Test bb, bbb", &bb, *bb, &bbb, *bbb)
+
+	//нулевые значения
+	var s []int
+	fmt.Println(s, len(s), cap(s))
+	if s == nil {
+		fmt.Println("nil!")
+	}
+
 	// 0, 1, 2, 3, 4
 	b := []int{1, 2, 3, 4, 5}
 	//b[10] = 15 - IndexOutOfBounds
 	b = append(b, 15)
 
-	c := b[1:4]             //с 1 включительно по 4 невключительно [1,2,3,4) -> 2,3,4
-	var d []int = c[0:2]    // -> 2, 3
+	c := b[1:4]          //с 1 включительно по 4 невключительно [1,2,3,4) -> 2,3,4
+	var d []int = c[0:2] // -> 2, 3
+	//a[0:10]
+	//a[:10] = [0:10]
+	//a[0:] = [0:end]
+	//a[:] = [begin:end]
 	firstThreeInts := b[:3] // = [0:3]
 	fmt.Println(firstThreeInts)
 	fmt.Println(b, c, d) // [1 2 3 4 5 15] [2 3 4] [2 3]
